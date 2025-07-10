@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Home() {
   return (
     <main>
@@ -11,6 +13,9 @@ export default function Home() {
             console.log(&quot;Hello, world!&quot;);
           </code>
         </p>
+        <Link href="/about" className="text-blue-500 hover:underline">
+          Learn more about us
+        </Link>
       </section>
     </main>
   );
