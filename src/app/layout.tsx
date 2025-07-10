@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { Jost } from "next/font/google";
-import { Source_Code_Pro } from "next/font/google";
+import { Jost, Source_Code_Pro } from "next/font/google";
+import { unstable_ViewTransition as ViewTransition } from "react";
 import "./globals.css";
 
 const geistSans = Jost({
@@ -27,7 +27,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <ViewTransition>{children}</ViewTransition>
       </body>
     </html>
   );
