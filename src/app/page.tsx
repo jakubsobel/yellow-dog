@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <section className="p-8 prose lg:prose-xl">
+    <section className="prose lg:prose-xl p-8">
       <h1>Hello, world!</h1>
       <p>This is a sample Next.js application with Tailwind CSS configured.</p>
       <p>That&apos;s how example code looks like in this app:</p>
@@ -15,7 +15,7 @@ export default function Home() {
           Tailwind CSS
         </a>
         , and uses{" "}
-        <a href="https://nextjs.org" className="text-blue-500 ">
+        <a href="https://nextjs.org" className="text-blue-500">
           Next.js
         </a>{" "}
         for server-side rendering and routing.

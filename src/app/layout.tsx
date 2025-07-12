@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Jost, Source_Code_Pro } from "next/font/google";
 import Link from "next/link";
 import { unstable_ViewTransition as ViewTransition } from "react";
+
 import "./globals.css";
 
 const geistSans = Jost({
@@ -25,21 +26,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
-      <body className={"antialiased flex m-12"}>
+      <body className={"m-4 flex flex-col antialiased lg:m-12 lg:flex-row"}>
         <ViewTransition>
-          <aside className="m-4 w-48 shrink-0 hidden lg:block">
-            <Link href="/" className="block mb-8">
-              <span className="text-4xl font-bold text-gray-900 tracking-tight">
-                the
-                <br />
-                <span className="text-blue-500 text-shadow-md text-shadow-blue-200">
+          <aside className="m-4 flex shrink-0 flex-col gap-4 lg:w-48 lg:gap-8">
+            <Link href="/" className="block">
+              <span className="text-4xl font-bold tracking-tight text-gray-900">
+                the <br className="hidden lg:inline" />
+                <span className="text-blue-500 text-shadow-blue-200 text-shadow-md">
                   future
                 </span>
-                <br />
-                is now
+                <br className="hidden lg:inline" /> is now
               </span>
             </Link>
-            <ul className="flex flex-col gap-4">
+            <ul className="flex gap-4 lg:flex-col">
               <li>
                 <Link href="/" className="text-blue-500 hover:underline">
                   Home
@@ -60,7 +59,7 @@ export default function RootLayout({
               </li>
             </ul>
           </aside>
-          <main className="m-4 shadow-[var(--shadow-elevation-high)] grow bg-white">
+          <main className="m-4 grow bg-white shadow-[var(--shadow-elevation-high)]">
             {children}
           </main>
         </ViewTransition>
