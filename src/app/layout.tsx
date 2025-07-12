@@ -27,7 +27,7 @@ export default function RootLayout({
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
       <body className={"antialiased flex m-12"}>
         <ViewTransition>
-          <aside className="m-4 w-48 shrink-0">
+          <aside className="m-4 w-48 shrink-0 hidden lg:block">
             <Link href="/" className="block mb-8">
               <span className="text-4xl font-bold text-gray-900 tracking-tight">
                 the
@@ -43,6 +43,14 @@ export default function RootLayout({
               <li>
                 <Link href="/" className="text-blue-500 hover:underline">
                   Home
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/web-features"
+                  className="text-blue-500 hover:underline"
+                >
+                  Web Features
                 </Link>
               </li>
               <li>
