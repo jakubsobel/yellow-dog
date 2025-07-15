@@ -53,6 +53,14 @@ export default function RootLayout({
                 </Link>
               </li>
               <li>
+                <Link
+                  href="/test-mdx"
+                  className="text-blue-500 hover:underline"
+                >
+                  Test MDX Page
+                </Link>
+              </li>
+              <li>
                 <Link href="/about" className="text-blue-500 hover:underline">
                   About
                 </Link>
