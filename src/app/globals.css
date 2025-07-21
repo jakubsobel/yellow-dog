@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @plugin '@tailwindcss/typography';
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
 @theme inline {
   --font-sans: var(--font-jost-sans);
@@ -12,6 +13,8 @@ body {
 
 :root {
   --shadow-color: 215deg 26% 60%;
+  --shadow-color-dark: 229deg 85% 5%;
+
   --shadow-elevation-low:
     0.3px 0.7px 0.9px hsl(var(--shadow-color) / 0.34),
     0.5px 1.1px 1.4px -1.2px hsl(var(--shadow-color) / 0.34),
@@ -29,4 +32,13 @@ body {
     12.7px 25.4px 31.9px -1.7px hsl(var(--shadow-color) / 0.38),
     20.9px 41.8px 52.6px -2.1px hsl(var(--shadow-color) / 0.38),
     33px 65.8px 82.8px -2.5px hsl(var(--shadow-color) / 0.38);
+
+  --shadow-elevation-high-dark:
+    0.3px 0.7px 0.9px hsl(var(--shadow-color-dark) / 0.38),
+    2.2px 4.4px 5.5px -0.4px hsl(var(--shadow-color-dark) / 0.38),
+    4.3px 8.5px 10.7px -0.8px hsl(var(--shadow-color-dark) / 0.38),
+    7.5px 14.9px 18.8px -1.2px hsl(var(--shadow-color-dark) / 0.38),
+    12.7px 25.4px 31.9px -1.7px hsl(var(--shadow-color-dark) / 0.38),
+    20.9px 41.8px 52.6px -2.1px hsl(var(--shadow-color-dark) / 0.38),
+    33px 65.8px 82.8px -2.5px hsl(var(--shadow-color-dark) / 0.38);
 }

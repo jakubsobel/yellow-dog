@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <section className="prose lg:prose-xl p-8">
+    <section className="prose lg:prose-xl dark:prose-invert p-8">
       <h1>Hello, world!</h1>
       <p>This is a sample Next.js application with Tailwind CSS configured.</p>
       <p>That&apos;s how example code looks like in this app:</p>

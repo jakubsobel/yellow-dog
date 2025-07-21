@@ -89,7 +89,7 @@ export default function WebFeatures() {
 
   return (
     <section className="flex justify-between gap-12 p-8 lg:gap-8">
-      <article className="lg:prose-xl prose">
+      <article className="lg:prose-xl prose dark:prose-invert">
         {" "}
         <h1>Web Features</h1>
         <h2>background-clip</h2>
