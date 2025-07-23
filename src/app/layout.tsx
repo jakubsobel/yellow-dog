@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Jost, Source_Code_Pro } from "next/font/google";
 import Link from "next/link";
 
+import { ThemeSwitch } from "@/components/theme-switch/ThemeSwitch";
 import "./globals.css";
 
 const geistSans = Jost({
@@ -24,7 +25,27 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
+    <html
+      suppressHydrationWarning
+      lang="en"
+      className={`${geistSans.variable} ${geistMono.variable}`}
+    >
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+            (function() {
+              const theme = localStorage.getItem('theme') || 'system';
+              if (theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+              } else {
+                document.documentElement.removeAttribute('data-theme');
+              }
+            })();            
+            `,
+          }}
+        />
+      </head>
       <body
         className={
           "m-4 flex flex-col bg-white antialiased lg:m-12 lg:flex-row dark:bg-slate-900"
@@ -65,6 +86,7 @@ export default function RootLayout({
               </Link>
             </li>
           </ul>
+          <ThemeSwitch />
         </aside>
         <main className="m-4 grow bg-white shadow-[var(--shadow-elevation-high)] dark:bg-slate-800 dark:shadow-[var(--shadow-elevation-high-dark)]">
           {children}
