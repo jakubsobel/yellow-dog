@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Jost, Source_Code_Pro } from "next/font/google";
 import Link from "next/link";
+import { unstable_ViewTransition as ViewTransition } from "react";
 
 import { ThemeSwitch } from "@/components/theme-switch/ThemeSwitch";
 import "./globals.css";
@@ -88,9 +89,11 @@ export default function RootLayout({
           </ul>
           <ThemeSwitch />
         </aside>
-        <main className="m-4 grow bg-white shadow-[var(--shadow-elevation-high)] dark:bg-slate-800 dark:shadow-[var(--shadow-elevation-high-dark)]">
-          {children}
-        </main>
+        <ViewTransition>
+          <main className="m-4 grow bg-white shadow-[var(--shadow-elevation-high)] dark:bg-slate-800 dark:shadow-[var(--shadow-elevation-high-dark)]">
+            {children}
+          </main>{" "}
+        </ViewTransition>
       </body>
     </html>
   );
