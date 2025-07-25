@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { flushSync } from "react-dom";
 
 // TODO: make it reusable, pass icons and values as props
 export function ThemeSwitch() {
@@ -9,6 +10,11 @@ export function ThemeSwitch() {
     "light" | "system" | "dark"
   >("system");
 
+  // This effect runs once on mount to check localStorage for a saved theme preference
+  // and sets the initial state accordingly.
+  // It also sets the mounted state to true, which is used to conditionally render the
+  // animated background dot only after the component has mounted.
+  // This prevents hydration mismatches between server-rendered and client-rendered content.
   useEffect(() => {
     setMounted(true);
 
@@ -19,16 +25,23 @@ export function ThemeSwitch() {
       | "system"
       | "dark";
 
+    // If a theme is stored, set it as the selected theme
+    // Otherwise, default to "system" (as defined in state initialization)
     if (storedTheme) {
       setSelectedTheme(storedTheme);
     }
   }, []);
 
+  // This effect runs whenever the selectedTheme state changes.
+  // It saves the selected theme to localStorage and applies the theme to the document.
+  // If the selected theme is "dark" or "system" and the user's system preference is dark,
+  // it sets a data attribute on the document element to apply the dark theme.
+  // Otherwise, it removes the data attribute to apply the light theme.
   useEffect(() => {
-    if (!mounted) return;
-
+    // Save the selected theme to localStorage
     localStorage.setItem("theme", selectedTheme);
 
+    // Apply the theme to the document
     if (
       selectedTheme === "dark" ||
       (selectedTheme === "system" &&
@@ -38,7 +51,19 @@ export function ThemeSwitch() {
     } else {
       document.documentElement.removeAttribute("data-theme");
     }
-  }, [selectedTheme, mounted]);
+  }, [selectedTheme]);
+
+  // This function handles the theme switch when a radio button is clicked.
+  // It uses `document.startViewTransition` to animate the transition between themes.
+  // The `flushSync` function ensures that the state update is processed immediately,
+  // allowing the transition to be smooth and visually appealing.
+  const handleSwitch = (theme: "light" | "system" | "dark") => {
+    document.startViewTransition(() => {
+      flushSync(() => {
+        setSelectedTheme(theme);
+      });
+    });
+  };
 
   const themes = [
     {
@@ -83,7 +108,7 @@ export function ThemeSwitch() {
       {/* Animated background dot */}
       {mounted && (
         <div
-          className="absolute z-0 h-8 w-8 rounded-xl bg-blue-500 transition-transform duration-300 ease-out dark:bg-blue-600"
+          className="absolute z-0 h-8 w-8 rounded-xl bg-blue-500 opacity-100 [transition:transform_0.3s_ease-out,opacity_0.2s] dark:bg-blue-600 starting:opacity-0"
           style={{
             transform: `translateX(calc(${getSelectedIndex()} * var(--switch-size)))`,
           }}
@@ -98,7 +123,7 @@ export function ThemeSwitch() {
             name="theme"
             checked={selectedTheme === theme.value}
             onChange={(e) =>
-              setSelectedTheme(e.target.value as typeof selectedTheme)
+              handleSwitch(e.target.value as typeof selectedTheme)
             }
             className="sr-only"
           />
