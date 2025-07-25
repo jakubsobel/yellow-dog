@@ -104,7 +104,7 @@ export function ThemeSwitch() {
     themes.findIndex((theme) => theme.value === selectedTheme);
 
   return (
-    <fieldset className="relative flex w-max items-center rounded-2xl border-1 border-gray-300 bg-white p-1 shadow-xs shadow-gray-100 [--switch-size:_calc(var(--spacing)_*_8)] dark:border-gray-700 dark:bg-gray-800 dark:shadow-gray-700">
+    <fieldset className="relative flex w-max items-center rounded-2xl border-1 border-slate-300 bg-white p-1 shadow-xs shadow-slate-200 [--switch-size:_calc(var(--spacing)_*_8)] dark:border-slate-700 dark:bg-slate-800 dark:shadow-slate-950">
       {/* Animated background dot */}
       {mounted && (
         <div
@@ -131,7 +131,7 @@ export function ThemeSwitch() {
             className={`flex h-8 w-8 items-center justify-center rounded-xl transition-colors duration-200 ${
               selectedTheme === theme.value && mounted
                 ? "text-white"
-                : "text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200"
+                : "text-slate-600 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-200"
             } `}
           >
             {theme.icon}

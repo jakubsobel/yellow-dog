@@ -53,7 +53,7 @@ export default function RootLayout({
       >
         <aside className="m-4 flex shrink-0 flex-col gap-4 lg:w-48 lg:gap-8">
           <Link href="/" className="block">
-            <span className="text-4xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
+            <span className="text-4xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
               the <br className="hidden lg:inline" />
               <span className="text-blue-500 text-shadow-blue-200 text-shadow-md dark:text-blue-700 dark:text-shadow-slate-950">
                 future
