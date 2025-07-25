@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { flushSync } from "react-dom";
 
 // TODO: make it reusable, pass icons and values as props
@@ -9,6 +9,7 @@ export function ThemeSwitch() {
   const [selectedTheme, setSelectedTheme] = useState<
     "light" | "system" | "dark"
   >("system");
+  const ref = useRef<HTMLDivElement>(null);
 
   // This effect runs once on mount to check localStorage for a saved theme preference
   // and sets the initial state accordingly.
@@ -57,12 +58,48 @@ export function ThemeSwitch() {
   // It uses `document.startViewTransition` to animate the transition between themes.
   // The `flushSync` function ensures that the state update is processed immediately,
   // allowing the transition to be smooth and visually appealing.
-  const handleSwitch = (theme: "light" | "system" | "dark") => {
-    document.startViewTransition(() => {
-      flushSync(() => {
-        setSelectedTheme(theme);
-      });
-    });
+  const handleSwitch = async (theme: "light" | "system" | "dark") => {
+    // Return early if View Transition API is not supported or user prefers reduced motion
+    if (
+      !ref.current ||
+      !document.startViewTransition ||
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
+      setSelectedTheme(theme);
+
+      return;
+    }
+
+    await document.startViewTransition({
+      update: () => {
+        flushSync(() => {
+          setSelectedTheme(theme);
+        });
+      },
+      // `types` is used to scope transitions using `:active-view-transition-type()`
+      types: ["theme-switch"],
+    }).ready;
+
+    const { top, left, width, height } = ref.current.getBoundingClientRect();
+    const x = left + width / 2;
+    const y = top + height / 2;
+    const right = window.innerWidth - left;
+    const bottom = window.innerHeight - top;
+    const maxRadius = Math.hypot(Math.max(left, right), Math.max(top, bottom));
+
+    document.documentElement.animate(
+      {
+        clipPath: [
+          `circle(0px at ${x}px ${y}px)`,
+          `circle(${maxRadius}px at ${x}px ${y}px)`,
+        ],
+      },
+      {
+        duration: 500,
+        easing: "ease-in-out",
+        pseudoElement: "::view-transition-new(root)",
+      },
+    );
   };
 
   const themes = [
@@ -108,6 +145,7 @@ export function ThemeSwitch() {
       {/* Animated background dot */}
       {mounted && (
         <div
+          ref={ref}
           className="absolute z-0 h-8 w-8 rounded-xl bg-blue-500 opacity-100 [transition:transform_0.3s_ease-out,opacity_0.2s] dark:bg-blue-600 starting:opacity-0"
           style={{
             transform: `translateX(calc(${getSelectedIndex()} * var(--switch-size)))`,
