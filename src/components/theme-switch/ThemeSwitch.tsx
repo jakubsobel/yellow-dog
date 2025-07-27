@@ -59,11 +59,28 @@ export function ThemeSwitch() {
   // The `flushSync` function ensures that the state update is processed immediately,
   // allowing the transition to be smooth and visually appealing.
   const handleSwitch = async (theme: "light" | "system" | "dark") => {
+    // If the selected theme is already the current theme, do nothing
+    if (selectedTheme === theme) return;
+
     // Return early if View Transition API is not supported or user prefers reduced motion
+    // Also if new theme will not cause visual change, do nothing
     if (
       !ref.current ||
       !document.startViewTransition ||
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+      selectedTheme === theme ||
+      (selectedTheme === "system" &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches &&
+        theme === "dark") ||
+      (selectedTheme === "dark" &&
+        theme === "system" &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches) ||
+      (selectedTheme === "system" &&
+        window.matchMedia("(prefers-color-scheme: light)").matches &&
+        theme === "light") ||
+      (selectedTheme === "light" &&
+        theme === "system" &&
+        window.matchMedia("(prefers-color-scheme: light)").matches)
     ) {
       setSelectedTheme(theme);
 
@@ -146,15 +163,23 @@ export function ThemeSwitch() {
       {mounted && (
         <div
           ref={ref}
-          className="absolute z-0 h-8 w-8 rounded-xl bg-blue-500 opacity-100 [transition:transform_0.3s_ease-out,opacity_0.2s] dark:bg-blue-600 starting:opacity-0"
+          className="absolute z-0 h-8 w-8 rounded-xl bg-blue-500 opacity-100 [transition:transform_0.3s_ease-out,opacity_0.2s] [view-transition-name:theme-thumb] dark:bg-blue-600 starting:opacity-0"
           style={{
             transform: `translateX(calc(${getSelectedIndex()} * var(--switch-size)))`,
           }}
         />
       )}
 
-      {themes.map((theme) => (
-        <label key={theme.value} className="relative z-10 cursor-pointer">
+      {themes.map((theme, index) => (
+        <label
+          key={theme.value}
+          style={{
+            viewTransitionName: `theme-label-${index}`,
+            /* @ts-expect-error: well viewTransitionClass exists, you know... */
+            viewTransitionClass: "theme-label",
+          }}
+          className={`relative z-10 cursor-pointer`}
+        >
           <input
             type="radio"
             value={theme.value}
