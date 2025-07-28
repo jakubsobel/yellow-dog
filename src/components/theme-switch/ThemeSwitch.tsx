@@ -174,7 +174,7 @@ export function ThemeSwitch() {
           key={theme.value}
           style={{
             viewTransitionName: `theme-label-${index}`,
-            /* @ts-expect-error: well viewTransitionClass exists, you know... */
+            /* @ts-expect-error: TypeScript doesn't recognize viewTransitionClass as a valid CSS property yet. */
             viewTransitionClass: "theme-label",
           }}
           className={`relative z-10 cursor-pointer`}
