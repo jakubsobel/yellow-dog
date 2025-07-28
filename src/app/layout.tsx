@@ -92,7 +92,7 @@ export default function RootLayout({
         <ViewTransition>
           <main className="m-4 grow bg-white shadow-[var(--shadow-elevation-high)] dark:bg-slate-800 dark:shadow-[var(--shadow-elevation-high-dark)]">
             {children}
-          </main>{" "}
+          </main>
         </ViewTransition>
       </body>
     </html>
