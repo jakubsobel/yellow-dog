@@ -68,7 +68,6 @@ export function ThemeSwitch() {
       !ref.current ||
       !document.startViewTransition ||
       window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
-      selectedTheme === theme ||
       (selectedTheme === "system" &&
         window.matchMedia("(prefers-color-scheme: dark)").matches &&
         theme === "dark") ||
