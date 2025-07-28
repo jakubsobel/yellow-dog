@@ -42,7 +42,7 @@ export default function RootLayout({
               } else {
                 document.documentElement.removeAttribute('data-theme');
               }
-            })();            
+            })();
             `,
           }}
         />
