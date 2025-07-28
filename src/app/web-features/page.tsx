@@ -118,7 +118,7 @@ export default function WebFeatures() {
           </tbody>
         </table>
         <time
-          className="text-gray-500"
+          className="text-slate-500"
           dateTime={backgroundClipFeature.status.baseline_high_date}
         >
           Became baseline on{" "}
@@ -143,7 +143,7 @@ export default function WebFeatures() {
           <strong>Baseline</strong> Widely available
           {backgroundClipFeature.status.baseline_high_date && (
             <time
-              className="text-gray-500"
+              className="text-slate-500"
               dateTime={backgroundClipFeature.status.baseline_high_date}
             >
               Became baseline on{" "}
@@ -166,7 +166,7 @@ export default function WebFeatures() {
                       <span className="text-xs font-semibold">
                         {browsers[browser as keyof typeof browsers].name}
                       </span>
-                      <span className="text-[0.6rem] text-gray-500">
+                      <span className="text-[0.6rem] text-slate-500">
                         Version {version}
                       </span>
                     </div>
@@ -228,7 +228,7 @@ export default function WebFeatures() {
           <strong>Baseline</strong> Newly available
           {backgroundClipFeature.status.baseline_low_date && (
             <time
-              className="text-gray-500"
+              className="text-slate-500"
               dateTime={backgroundClipFeature.status.baseline_low_date}
             >
               Became baseline on{" "}
@@ -246,7 +246,7 @@ export default function WebFeatures() {
           />
           Limited availability
         </div>
-        <div className="flex w-64 flex-col gap-1 rounded-2xl bg-gray-50 p-4">
+        <div className="flex w-64 flex-col gap-1 rounded-2xl bg-slate-50 p-4">
           <h3 className="text-lg font-semibold">Browser Support</h3>
         </div>
       </aside>
