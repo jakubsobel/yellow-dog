@@ -3,6 +3,9 @@ import { Jost, Source_Code_Pro } from "next/font/google";
 import Link from "next/link";
 import { unstable_ViewTransition as ViewTransition } from "react";
 
+import data from "web-features/data.json" with { type: "json" };
+const { features } = data;
+
 import { ThemeSwitch } from "@/components/theme-switch/ThemeSwitch";
 import "./globals.css";
 
@@ -42,6 +45,22 @@ export default function RootLayout({
               } else {
                 document.documentElement.removeAttribute('data-theme');
               }
+
+              window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", e => {
+                const theme = localStorage.getItem('theme') || 'system';
+  
+                if (theme === 'system') {
+                  if (e.matches) {
+                    document.startViewTransition(() => {
+                      document.documentElement.setAttribute('data-theme', 'dark');
+                    });
+                  } else {
+                    document.startViewTransition(() => {
+                      document.documentElement.removeAttribute('data-theme');
+                    });
+                  }
+                }
+              });
             })();
             `,
           }}
@@ -85,6 +104,25 @@ export default function RootLayout({
               <Link href="/about" className="text-blue-500 hover:underline">
                 About
               </Link>
+            </li>
+            <li>
+              <details className="group">
+                <summary className="cursor-pointer text-blue-500 select-none hover:underline">
+                  More
+                </summary>
+                <ul className="mt-2 space-y-2 pl-4 text-sm text-slate-700 dark:text-slate-300">
+                  {Object.entries(features).map(([slug, feature]) => (
+                    <li key={slug}>
+                      <Link
+                        href={`/more/${slug}`}
+                        className="text-blue-500 hover:underline"
+                      >
+                        {feature.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </details>
             </li>
           </ul>
           <ThemeSwitch />
