@@ -21,17 +21,29 @@ export default async function FeaturePage({ params }: PageProps) {
     notFound();
   }
 
+  let MdxDescription = null;
+  try {
+    const markdownModule = await import(`@/markdown/${slug}.mdx`);
+    MdxDescription = markdownModule.default;
+  } catch (_error) {
+    // MDX file doesn't exist, that's okay
+    console.log(`No MDX file found for ${slug}`);
+  }
+
   return (
     <section className="prose lg:prose-xl dark:prose-invert p-8">
       <h1>{feature.name}</h1>
 
       {feature.description_html && (
         <div
+          className="italic"
           dangerouslySetInnerHTML={{
             __html: feature.description_html,
           }}
         />
       )}
+
+      {MdxDescription && <MdxDescription />}
 
       {feature.status && (
         <div>
@@ -80,3 +92,5 @@ export async function generateMetadata({ params }: PageProps) {
       : `Learn about ${feature.name} web feature`,
   };
 }
+
+export const dynamicParams = false;
