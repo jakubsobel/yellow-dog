@@ -46,7 +46,7 @@ export default function RootLayout({
                 document.documentElement.removeAttribute('data-theme');
               }
 
-              window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change",   e => {
+              window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", e => {
                 const theme = localStorage.getItem('theme') || 'system';
   
                 if(theme === 'system') {   
