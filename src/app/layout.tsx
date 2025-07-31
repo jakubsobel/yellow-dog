@@ -49,7 +49,7 @@ export default function RootLayout({
               window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", e => {
                 const theme = localStorage.getItem('theme') || 'system';
   
-                if(theme === 'system') {   
+                if (theme === 'system') {
                   if (e.matches) {
                     document.startViewTransition(() => {
                       document.documentElement.setAttribute('data-theme', 'dark');
